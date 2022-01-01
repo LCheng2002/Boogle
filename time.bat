@@ -1,6 +1,6 @@
 @echo off
 title 
-git pull origin master
+git pull origin main
 
 C:\ProgramData\Anaconda3\python.exe phrase_comment.py
 
