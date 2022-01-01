@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 import requests
 import json
 
@@ -12,7 +11,7 @@ import os
 
 def write_to_DB(product_id,user_name, comment):
     # 连接数据库服务 ,如果不存在,会自动生成
-    connect = sqlite3.connect(r"C:\Users\cheng\Desktop\Boogle\jingdong_comment.db")
+    connect = sqlite3.connect('./jingdong_comment.db')
     # 从会话连接生成游标,相当于光标
     cursor = connect.cursor()
     # execute(sql)
@@ -70,7 +69,7 @@ def comment_info(product_id):
 
 
 if __name__ == "__main__":
-    id_list = np.load(r"C:\Users\cheng\Desktop\Boogle\ID_list_comment.npy")
+    id_list = np.load("./ID_list_comment.npy")
     try:
         while True:
             print(len(id_list))
@@ -78,4 +77,4 @@ if __name__ == "__main__":
             comment_info(id_)
             id_list = id_list[1:]
     except:
-        id_list = np.save(r"C:\Users\cheng\Desktop\Boogle\ID_list_comment.npy",id_list)
+        id_list = np.save("ID_list_comment.npy",id_list)
