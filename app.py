@@ -23,7 +23,7 @@ def history():
     connect = sqlite3.connect('./history.db')
     cursor = connect.cursor()
 
-    sql = "select Time, content from history"
+    sql = "select Time, searching_content from history"
     cursor.execute(sql)
     records = cursor.fetchall()
     return render_template("history.html",records = records)

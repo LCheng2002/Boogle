@@ -9,8 +9,8 @@ def push_to_history(content):
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS history(
             id INTEGER PRIMARY KEY,
-            content TEXT,
-            Time TEXT,
+            searching_content TEXT,
+            Time TEXT
         );
     """)
 
