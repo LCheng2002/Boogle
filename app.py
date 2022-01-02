@@ -14,6 +14,8 @@ def index():
 @app.route('/results', methods=['GET'])
 def results():
     search_content = request.args.get('search_content')
+    if(not search_content):
+        return render_template("result.html")
     Matching_num, Searching_result = Page_search(search_content)
     # print(Searching_result)
     return render_template("results.html", search_content = search_content, Matching_num = Matching_num, Searching_result = Searching_result)
@@ -25,7 +27,7 @@ def history():
 
     sql = "select Time, searching_content from history"
     cursor.execute(sql)
-    records = cursor.fetchall()
+    records = cursor.fetchall()[::-1]
     return render_template("history.html",records = records)
 
 

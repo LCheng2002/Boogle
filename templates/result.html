@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Boogle_history</title>
+    <title>Boogle_result</title>
     <link rel="icon" href="{{url_for('static',filename = 'favicon-16x16.png')}}" type="image/x-icon">
 
     <!-- href= "{{ url_for('static', filename = 'css/login.css') }}" -->
@@ -24,6 +24,7 @@
 
     <!-- Custom styles for this page -->
     <link href="{{url_for('static',filename = 'vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -55,14 +56,14 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="./results">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Results</span></a>
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="./history">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>History</span>
@@ -137,40 +138,6 @@
                             </div>
                         </li>
                 </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-                
-                
-                    <!-- Content Row -->
-                    <div class="row">
-                        <!-- Basic Card Example -->
-                        <div class = "col-lg-12">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Histroy Record</h6>
-                                </div>
-                                <div class="card-body">
-                                    {% for record in records %}
-                                    <h6 class="m-0 font-weight-bold text-primary">{{record[0]}}</h6>
-                                    <p>{{record[1]}}</p>
-                                    <br>
-                                    {%endfor%}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                </div>
-                <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
@@ -231,6 +198,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{url_for('static',filename = 'js/demo/datatables-demo.js')}}"></script>
+
 </body>
 
 </html>
