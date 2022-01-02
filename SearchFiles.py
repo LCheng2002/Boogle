@@ -4,6 +4,7 @@ INDEX_DIR = "IndexFiles.index"
 
 import sys, os, lucene, jieba,re
 from push_to_history import push_to_history
+import sqlite3
 
 from java.io import File
 from org.apache.lucene.analysis.standard import StandardAnalyzer
@@ -50,12 +51,11 @@ def run(searcher, analyzer, search_content):
 
     # print()
     # print ("Searching for:", command)
-    query = QueryParser("", analyzer).parse(command)
+    query = QueryParser("title", analyzer).parse(command)
     scoreDocs = searcher.search(query, 50).scoreDocs
     # print ("%s total matching documents." % len(scoreDocs))
     Matching_num = len(scoreDocs)
     Searching_result = []
-    reg= re.compile(r"(?<=/)[0-9]*(?=\.)")
     
     for i, scoreDoc in enumerate(scoreDocs):
         doc = searcher.doc(scoreDoc.doc)
@@ -67,8 +67,6 @@ def run(searcher, analyzer, search_content):
         Match['url'] = doc.get("url")
         Match['src'] = doc.get("src")
 
-        url = Match['url']
-        product_id = reg.findall(url)[0]
 
         comments = get_comment_DB(product_id)
         Match['comments'] = comments

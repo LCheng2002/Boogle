@@ -75,6 +75,7 @@ class IndexFiles(object):
         # t3.setStored(True)
         # t3.setTokenized(True)
         # t3.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS)
+        reg= re.compile(r"(?<=/)[0-9]*(?=\.)")
 
         for i in range(53):
             for rt, ds, fs in os.walk(root+f'/{i}'):
@@ -92,6 +93,9 @@ class IndexFiles(object):
                         author = t[3]
                         url = t[4]
                         src = t[5]
+
+                        print(url)
+                        product_id = reg.findall(url)[0]
                         # filename = t[1]
                         # URL = t[0]
         # for root, dirnames, filenames in os.walk(root):
@@ -104,6 +108,7 @@ class IndexFiles(object):
                         doc.add(Field("author",author, t1))
                         doc.add(Field("url", url, t2))
                         doc.add(Field("src",src, t2))
+                        doc.add(Field("product_id",product_id,t2))
                         writer.addDocument(doc)
                     indextxt.close()
 
