@@ -95,7 +95,8 @@ def Page_search(search_content):
     Matching_num, Searching_result = run(searcher, analyzer, search_content)
     return Matching_num, Searching_result
 
-print(Page_search("小王子"))
+if __name__ == "__main__":
+    print(Page_search("小王子"))
 # if __name__ == '__main__':
 #     STORE_DIR = "index"
 #     lucene.initVM(vmargs=['-Djava.awt.headless=true'])
