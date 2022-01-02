@@ -2,8 +2,8 @@
 
 INDEX_DIR = "IndexFiles.index"
 
-import sys, os, lucene, jieba
-from push_to_history.py import push_to_history
+import sys, os, lucene, jieba,re
+from push_to_history import push_to_history
 
 from java.io import File
 from org.apache.lucene.analysis.standard import StandardAnalyzer
@@ -42,7 +42,7 @@ def run(searcher, analyzer, search_content):
     # print()
     # print ("Hit enter with no input to quit.")
     # command = input("Query:")
-    command = unicode(search_content, 'utf-8')
+    command = search_content
     seg_list = jieba.cut(command)
     command = (" ".join(seg_list))
     if command == '':
@@ -55,17 +55,24 @@ def run(searcher, analyzer, search_content):
     # print ("%s total matching documents." % len(scoreDocs))
     Matching_num = len(scoreDocs)
     Searching_result = []
-
+    reg= re.compile(r"(?<=/)[0-9]*(?=\.)")
+    
     for i, scoreDoc in enumerate(scoreDocs):
         doc = searcher.doc(scoreDoc.doc)
         Match = {}
-        Match[title] = doc.get("title")
-        Match[author] = doc.get("author")
-        Match[price] = doc.get("price")
-        Match[publisher] = doc.get("publisher")
-        Match[url] = doc.get("url")
-        Match[src] = doc.get("src")
-        
+        Match['title'] = doc.get("title")
+        Match['author'] = doc.get("author")
+        Match['price'] = doc.get("price")
+        Match['publisher'] = doc.get("publisher")
+        Match['url'] = doc.get("url")
+        Match['src'] = doc.get("src")
+
+        url = Match['url']
+        product_id = reg.findall(url)[0]
+
+        comments = get_comment_DB(product_id)
+        Match['comments'] = comments
+
         Searching_result.append(Match)
         # print ('title:', doc.get("title"), \
         #         '\nprice:', doc.get("price"), \
@@ -73,8 +80,8 @@ def run(searcher, analyzer, search_content):
         #         "\nauthor:",doc.get("author"),\
         #         '\nurl:',doc.get("url"), '\n')
             # print 'explain:', searcher.explain(query, scoreDoc.doc)
-    push_to_history(search_content)
-    return Matching_num, Searching_result, comments
+    # push_to_history(search_content)
+    return Matching_num, Searching_result
 
 
 def Page_search(search_content):
@@ -87,10 +94,10 @@ def Page_search(search_content):
     directory = SimpleFSDirectory(File(STORE_DIR).toPath())
     searcher = IndexSearcher(DirectoryReader.open(directory))
     analyzer = StandardAnalyzer()#Version.LUCENE_CURRENT)
-    Matching_num, Searching_result, conments = run(searcher, analyzer, search_content)
-    return Matching_num, Searching_result, comments
+    Matching_num, Searching_result = run(searcher, analyzer, search_content)
+    return Matching_num, Searching_result
 
-
+print(Page_search("小王子"))
 # if __name__ == '__main__':
 #     STORE_DIR = "index"
 #     lucene.initVM(vmargs=['-Djava.awt.headless=true'])

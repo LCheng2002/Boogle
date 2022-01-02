@@ -37,7 +37,7 @@ ID_list = np.array([])
 for index in range(53):
     index_in_txt = 1
     a = "./first/{}/{}_{}.txt".format(index,index, index_in_txt)
-    reg= re.compile(r"(?<=/)[0-9]*(?=\.)") 
+    reg= re.compile(r"(?<=/)[0-9]*(?=\.)")
     while os.path.exists("./first/{}/{}_{}.txt".format(index,index, index_in_txt)):
         file = open("./first/{}/{}_{}.txt".format(index,index, index_in_txt),'r',encoding='utf-8')
         while True:
