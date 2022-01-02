@@ -4,7 +4,7 @@ cd C:\Users\cheng\Desktop\Boogle
 title auto pull
 git pull origin main
 
-run C:\ProgramData\Anaconda3\python.exe .\phrase_comment.py
+start C:\ProgramData\Anaconda3\python.exe .\phrase_comment.py
 
 title auto commit
 git add .
