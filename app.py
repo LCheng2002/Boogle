@@ -15,7 +15,7 @@ def index():
 def results():
     search_content = request.args.get('search_content')
     Matching_num, Searching_result = Page_search(search_content)
-    print(Searching_result)
+    # print(Searching_result)
     return render_template("results.html", search_content = search_content, Matching_num = Matching_num, Searching_result = Searching_result)
 
 @app.route('/history')
