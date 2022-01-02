@@ -78,7 +78,7 @@ def run(searcher, analyzer, search_content):
         #         "\nauthor:",doc.get("author"),\
         #         '\nurl:',doc.get("url"), '\n')
             # print 'explain:', searcher.explain(query, scoreDoc.doc)
-    # push_to_history(search_content)
+    push_to_history(search_content)
     return Matching_num, Searching_result
 
 
