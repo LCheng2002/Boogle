@@ -3,6 +3,7 @@
 INDEX_DIR = "IndexFiles.index"
 
 import sys, os, lucene, jieba
+from push_to_history.py import push_to_history
 
 from java.io import File
 from org.apache.lucene.analysis.standard import StandardAnalyzer
@@ -21,40 +22,82 @@ search query entered against the 'contents' field.  It will then display the
 search.close() is currently commented out because it causes a stack overflow in
 some cases.
 """
-def run(searcher, analyzer):
+
+def get_comment_DB(product_id):
+    connect = sqlite3.connect('./jingdong_comment.db')
+    cursor = connect.cursor()
+
+    # sql = "select product_id from jingdong_comment"
+    sql = "select name,comment from jingdong_comment where jingdong_comment.product_id = {}".format(product_id)
+    cursor.execute(sql)
+    comments = cursor.fetchall() 
+
+    cursor.close()
+    connect.close()
+
+    return comments
+
+def run(searcher, analyzer, search_content):
     # while True:
-    print()
-    print ("Hit enter with no input to quit.")
-    command = input("Query:")
-    #command = unicode(command, 'utf-8')
+    # print()
+    # print ("Hit enter with no input to quit.")
+    # command = input("Query:")
+    command = unicode(search_content, 'utf-8')
     seg_list = jieba.cut(command)
     command = (" ".join(seg_list))
     if command == '':
         return
 
-    print()
-    print ("Searching for:", command)
-    query = QueryParser("title", analyzer).parse(command)
+    # print()
+    # print ("Searching for:", command)
+    query = QueryParser("", analyzer).parse(command)
     scoreDocs = searcher.search(query, 50).scoreDocs
-    print ("%s total matching documents." % len(scoreDocs))
+    # print ("%s total matching documents." % len(scoreDocs))
+    Matching_num = len(scoreDocs)
+    Searching_result = []
 
     for i, scoreDoc in enumerate(scoreDocs):
         doc = searcher.doc(scoreDoc.doc)
-        print ('title:', doc.get("title"), \
-                '\nprice:', doc.get("price"), \
-                '\npublisher:', doc.get("publisher"), \
-                "\nauthor:",doc.get("author"),\
-                '\nurl:',doc.get("url"), '\n')
+        Match = {}
+        Match[title] = doc.get("title")
+        Match[author] = doc.get("author")
+        Match[price] = doc.get("price")
+        Match[publisher] = doc.get("publisher")
+        Match[url] = doc.get("url")
+        Match[src] = doc.get("src")
+        
+        Searching_result.append(Match)
+        # print ('title:', doc.get("title"), \
+        #         '\nprice:', doc.get("price"), \
+        #         '\npublisher:', doc.get("publisher"), \
+        #         "\nauthor:",doc.get("author"),\
+        #         '\nurl:',doc.get("url"), '\n')
             # print 'explain:', searcher.explain(query, scoreDoc.doc)
+    push_to_history(search_content)
+    return Matching_num, Searching_result, comments
 
 
-if __name__ == '__main__':
+def Page_search(search_content):
     STORE_DIR = "index"
-    lucene.initVM(vmargs=['-Djava.awt.headless=true'])
-    print ('lucene', lucene.VERSION)
-    #base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+    try:
+        lucene.initVM(vmargs=['-Djava.awt.headless=true'])
+    except:
+        vm_env = lucene.getVMEnv()
+        vm_env.attachCurrentThread()
     directory = SimpleFSDirectory(File(STORE_DIR).toPath())
     searcher = IndexSearcher(DirectoryReader.open(directory))
     analyzer = StandardAnalyzer()#Version.LUCENE_CURRENT)
-    run(searcher, analyzer)
-    del searcher
+    Matching_num, Searching_result, conments = run(searcher, analyzer, search_content)
+    return Matching_num, Searching_result, comments
+
+
+# if __name__ == '__main__':
+#     STORE_DIR = "index"
+#     lucene.initVM(vmargs=['-Djava.awt.headless=true'])
+#     print ('lucene', lucene.VERSION)
+#     #base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+#     directory = SimpleFSDirectory(File(STORE_DIR).toPath())
+#     searcher = IndexSearcher(DirectoryReader.open(directory))
+#     analyzer = StandardAnalyzer()#Version.LUCENE_CURRENT)
+#     run(searcher, analyzer)
+#     del searcher

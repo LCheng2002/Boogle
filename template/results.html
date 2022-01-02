@@ -161,7 +161,7 @@
                                     </div>
                                     <p>Title:{{Match[title]}}</p>
                                     <p>Author:{{Match[author]}}</p>
-                                    <p>Price:{{Match[pricr]}}</p>
+                                    <p>Price:{{Match[price]}}</p>
                                     <p>Publisher:{{Match[publisher]}}</p>
                                 </div>
                             </div>
@@ -178,8 +178,8 @@
                         <div class="collapse show" id="collapseCardExample">
                             {% for comment in comments%}
                             <div class="card-body">
-                                <strong>{{comment[username]}}:</strong>
-                                <p>{{comment[string]}}</p>
+                                <strong>{{comment[0]}}:</strong>
+                                <p>{{comment[1]}}</p>
                                 <br>
                             </div>
                             {%endfor%}
