@@ -104,7 +104,7 @@
                             <input type="name" name = "search_content" class="form-control bg-light border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -148,7 +148,7 @@
                     <p class="mb-4">Search-Data Details as searching contents {{search_content}}.
                         There are all {{Matching_num}} outcomes: </p>
                 <!-- /.container-fluid -->
-                    {% for Match in Matching_num %}
+                    {% for Match in Searching_result %}
                     <div class = "row">
                         <div class="col-lg-12">
                             <div class="card shadow mb-4">
@@ -160,10 +160,10 @@
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
                                             src={{Match[src]}} alt="...">
                                     </div>
-                                    <p>Title:{{Match[title]}}</p>
-                                    <p>Author:{{Match[author]}}</p>
-                                    <p>Price:{{Match[price]}}</p>
-                                    <p>Publisher:{{Match[publisher]}}</p>
+                                    <p>Title:{{Match[title]|safe}}</p>
+                                    <p>Author:{{Match[author]|safe}}</p>
+                                    <p>Price:{{Match[price]|safe}}</p>
+                                    <p>Publisher:{{Match[publisher]|safe}}</p>
                                 </div>
                             </div>
                         </div>
