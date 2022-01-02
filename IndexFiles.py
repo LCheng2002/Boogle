@@ -64,7 +64,7 @@ class IndexFiles(object):
         t1 = FieldType()
         t1.setStored(True)
         t1.setTokenized(True)
-        t1.setIndexOptions(IndexOptions.NONE)  # Not Indexed
+        t1.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS)  # Not Indexed
         
         t2 = FieldType()
         t2.setStored(True)
