@@ -1,5 +1,5 @@
 @echo off
-cd C:\Users\cheng\Desktop\Boogle
+cd C:\Users\86147\Documents\Github\Boogle
 
 title auto pull
 git pull origin main
