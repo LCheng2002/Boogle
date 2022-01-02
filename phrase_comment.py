@@ -46,27 +46,23 @@ def parse_one_page(product_id,html):
 
 def comment_info(product_id):
     page = "https://club.jd.com/comment/productPageComments.action?callback&productId={}&score=0&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1".format(product_id)
-    try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
-            "Referer": "https://item.jd.com/",
-            "Cookie": "3AB9D23F7A4B3C9B=VCZP7M7YJRJHRR4NROQDRFF3ONPNOOHFBCEKE7ZIEUEEXC55JZMKKTPWVO4SHCLG5MESPVFRKTQIJP2QSZZLPLYA7A; TrackID=1vNcZZ86gqJVNcn0lA8K4G59CKK2xLMVj00TdQGp_qnK7CJUVAFLcRjOf6c-Tdv-qHTCfTItsNsQ0dPvjX8gFdHIxJKyZMEpjpuUgtmG6ups; shshshfp=3f2984513937efb888928303a78596e4; shshshfpa=1cb72623-1e95-9c4e-2289-c706abc21156-1556477337; shshshsID=862bc6bf080fc3ff757e84c12bd2ac4c_2_1556477358058; shshshfpb=vkqdiZw5URKpR4d1GBRYd6g%3D%3D; __jda=122270672.15564773383761543900726.1556477338.1556477338.1556477338.1; __jdb=122270672.2.15564773383761543900726|1.1556477338; __jdc=122270672; __jdv=122270672|direct|-|none|-|1556477338378; __jdu=15564773383761543900726; areaId=27; ipLoc-djd=27-2376-50230-53671; JSESSIONID=1AA5FC953DBCD87E5B49464911847606.s1",
-            "Host": "club.jd.com",
-            "DNT": "1",
-            "Accept": "*/*",
-            "Accept-Language":"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3",
-            "Accept - Encoding": "gzip, deflate, br",
-            "Connection": "keep-alive"
-        }
-        response = requests.get(page, headers = headers)
-        if response.status_code == 200:
-            print("获取页面成功！")
-            parse_one_page(product_id,response.text)
-        else:
-            print("获取页面失败，状态码：%d" %response.status_code)
-    except RequestException:
-        print("请求失败")
-
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
+        "Referer": "https://item.jd.com/",
+        "Cookie": "3AB9D23F7A4B3C9B=VCZP7M7YJRJHRR4NROQDRFF3ONPNOOHFBCEKE7ZIEUEEXC55JZMKKTPWVO4SHCLG5MESPVFRKTQIJP2QSZZLPLYA7A; TrackID=1vNcZZ86gqJVNcn0lA8K4G59CKK2xLMVj00TdQGp_qnK7CJUVAFLcRjOf6c-Tdv-qHTCfTItsNsQ0dPvjX8gFdHIxJKyZMEpjpuUgtmG6ups; shshshfp=3f2984513937efb888928303a78596e4; shshshfpa=1cb72623-1e95-9c4e-2289-c706abc21156-1556477337; shshshsID=862bc6bf080fc3ff757e84c12bd2ac4c_2_1556477358058; shshshfpb=vkqdiZw5URKpR4d1GBRYd6g%3D%3D; __jda=122270672.15564773383761543900726.1556477338.1556477338.1556477338.1; __jdb=122270672.2.15564773383761543900726|1.1556477338; __jdc=122270672; __jdv=122270672|direct|-|none|-|1556477338378; __jdu=15564773383761543900726; areaId=27; ipLoc-djd=27-2376-50230-53671; JSESSIONID=1AA5FC953DBCD87E5B49464911847606.s1",
+        "Host": "club.jd.com",
+        "DNT": "1",
+        "Accept": "*/*",
+        "Accept-Language":"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Accept - Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive"
+    }
+    response = requests.get(page, headers = headers)
+    if response.status_code == 200:
+        print("获取页面成功！")
+        parse_one_page(product_id,response.text)
+    else:
+        print("获取页面失败，状态码：%d" %response.status_code)
 
 if __name__ == "__main__":
     id_list = np.load("./ID_list_comment.npy")
