@@ -67,7 +67,7 @@ def run(searcher, analyzer, search_content):
         Match['url'] = doc.get("url")
         Match['src'] = doc.get("src")
 
-
+        product_id = doc.get("product_id")
         comments = get_comment_DB(product_id)
         Match['comments'] = comments
 
