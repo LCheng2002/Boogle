@@ -1,7 +1,7 @@
 @echo off
 cd C:\Users\cheng\Desktop\Boogle
 
-title 
+title auto pull
 git pull origin main
 
 C:\ProgramData\Anaconda3\python.exe .\phrase_comment.py
